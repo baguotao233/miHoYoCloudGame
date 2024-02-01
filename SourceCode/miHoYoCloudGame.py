@@ -1,15 +1,21 @@
-"""
-main.py
-"""
 import webview
 import tkinter as tk  
 from tkinter import ttk  
+
+import platform
 
 games = "https://mhyy.mihoyo.com/" 
 # 创建主窗口  
 root = tk.Tk()  
 root.title("米哈云游")  
-root.geometry("300x200")  
+
+# select system
+systemPlatform = platform.system()
+if systemPlatform == "Windows":
+    root.geometry("300x200")  
+elif systemPlatform == "Darwin":
+    root.geometry("350x100")  
+
 root.resizable(False, False)  # 禁止调整窗口大小  
 # 创建标签  
 label = ttk.Label(root, text="请选择要启动的云游戏")  
@@ -23,11 +29,13 @@ def start_game1():
     global games  
     games = "https://sr.mihoyo.com/cloud"  
     close_window()  
+    jumpWeb(games)
   
 def start_game2():  
     global games  
     games = "https://ys.mihoyo.com/cloud"  
     close_window()  
+    jumpWeb(games)
   
 def author_link():  # 点击后跳转网址到作者页面  
     import webbrowser  
@@ -47,20 +55,20 @@ author_btn = ttk.Button(button_frame, text="关于作者", command=author_link) 
 author_btn.pack(side=tk.LEFT, padx=5, pady=5)  
 label_text = ttk.Label(root, text="")  
 label_text.pack(pady=10)  
-  
-# 运行主循环  
-root.mainloop()
-# 运行主循环  
-root.mainloop()
-window = webview.create_window(
-    title='米哈云游',
-    url=games,
-    width=1280,
-    height=800,
-    resizable=True,    # 固定窗口大小
-    text_select=False,   # 禁止选择文字内容
-    confirm_close=False   # 关闭时提示
-)
-webview.start()
 
 
+def jumpWeb(game):
+    window = webview.create_window(
+        title='米哈云游',
+        url=games,
+        width=1280,
+        height=800,
+        resizable=True,    # 固定窗口大小
+        text_select=False,   # 禁止选择文字内容
+        confirm_close=False   # 关闭时提示
+    )
+    webview.start()
+
+
+# 运行主循环  
+root.mainloop()
